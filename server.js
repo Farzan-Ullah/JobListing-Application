@@ -1,10 +1,11 @@
 require("dotenv").config();
-
 const mongoose = require("mongoose");
-
 const express = require("express");
+const authRoute = require("./routes/auth");
 
 const app = express();
+
+app.use(express.json());
 
 mongoose
   .connect(process.env.MONGODB_URI)
@@ -23,6 +24,8 @@ app.get("/api/health", (req, res) => {
     time: new Date(),
   });
 });
+
+app.use("/api/v1/auth", authRoute);
 
 app.post("/api/v1/hi", (req, res) => {
   res.json({
