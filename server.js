@@ -2,6 +2,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const express = require("express");
 const authRoute = require("./routes/auth");
+const jobRoute = require("./routes/job");
 
 const app = express();
 
@@ -17,7 +18,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/health", (req, res) => {
-  console.log("hey health");
+  console.log("Server health");
   res.json({
     service: "Backend Joblisting server",
     status: "active",
@@ -26,6 +27,7 @@ app.get("/api/health", (req, res) => {
 });
 
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/job", jobRoute);
 
 app.post("/api/v1/hi", (req, res) => {
   res.json({
