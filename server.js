@@ -29,6 +29,17 @@ app.get("/api/health", (req, res) => {
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/job", jobRoute);
 
+app.use("*", (req, res) => {
+  res.status(404).json({ errorMessage: "Route Not Found!" });
+});
+
+app.use((error, req, res, next) => {
+  console.log(error);
+  res.status(500).json({
+    errorMessage: "Something went wrong",
+  });
+});
+
 app.post("/api/v1/hi", (req, res) => {
   res.json({
     message: "hi",
