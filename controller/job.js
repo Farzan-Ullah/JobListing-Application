@@ -152,8 +152,11 @@ const getAllJobs = async (req, res, next) => {
     let filter = {};
     if (skills) {
       filteredSkills = skills.split(",");
+      const caseInsensitiveFilteredSkills = filteredSkills.map(
+        (element) => new RegExp(element, "i")
+      );
       filter = {
-        skills: { $in: filteredSkills },
+        skills: { $in: caseInsensitiveFilteredSkills },
       };
     }
 
