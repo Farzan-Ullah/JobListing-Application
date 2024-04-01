@@ -3,10 +3,12 @@ const mongoose = require("mongoose");
 const express = require("express");
 const authRoute = require("./routes/auth");
 const jobRoute = require("./routes/job");
+const cors = require("cors");
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 mongoose
   .connect(process.env.MONGODB_URI)
@@ -46,7 +48,7 @@ app.post("/api/v1/hi", (req, res) => {
   });
 });
 
-const PORT = 3000;
+const PORT = 4000;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
