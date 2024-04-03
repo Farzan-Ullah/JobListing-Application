@@ -60,7 +60,6 @@ const loginUser = async (req, res) => {
       process.env.SECRET_CODE,
       { expiresIn: "60h" }
     );
-    console.log(token);
 
     res.json({
       message: " User logged in",

@@ -15,8 +15,6 @@ const createJobPost = async (req, res, next) => {
       refUserId,
     } = req.body;
 
-    console.log(companyName());
-
     if (
       !companyName ||
       !logoUrl ||
