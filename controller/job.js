@@ -1,5 +1,5 @@
 const Job = require("../models/job");
-
+const { decodeJwtToken } = require("../middlewares/verifyToken");
 const createJobPost = async (req, res, next) => {
   try {
     const {
@@ -56,6 +56,7 @@ const createJobPost = async (req, res, next) => {
 const getJobDetailsById = async (req, res, next) => {
   try {
     const jobId = req.params.jobId;
+    const userId = decodeJwtToken();
     const jobDetails = await Job.findById(jobId);
 
     if (!jobDetails) {
@@ -64,7 +65,16 @@ const getJobDetailsById = async (req, res, next) => {
       });
     }
 
-    res.json({ data: jobDetails });
+    let isEditable;
+    if (userId) {
+      const ObjectId = mongoose.Types.ObjectId;
+      const id = new ObjectId(userId);
+      if (id === jobDetails.refUserId) {
+        isEditable = true;
+      }
+    }
+
+    res.json({ jobDetails, isEditable: true });
   } catch (error) {
     next(error);
   }
